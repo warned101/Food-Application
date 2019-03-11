@@ -1,8 +1,10 @@
 package com.example.eaters;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -25,14 +27,14 @@ public class SignUp extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
-        edtPhone = findViewById(R.id.adtPhone);
-        edtName = findViewById(R.id.adtName);
-        edtPassword = findViewById(R.id.adtPassword);
-        btnSignUp = findViewById(R.id.btnSignUp);
+        edtPhone = (MaterialEditText) findViewById(R.id.adtPhone);
+        edtName = (MaterialEditText) findViewById(R.id.adtName);
+        edtPassword = (MaterialEditText) findViewById(R.id.adtPassword);
+        btnSignUp = (Button) findViewById(R.id.btnSignUp);
 
         //Init firebase
         final FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-        final DatabaseReference tableUser = firebaseDatabase.getReference();
+        final DatabaseReference tableUser = firebaseDatabase.getReference("User");
 
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,16 +47,19 @@ public class SignUp extends AppCompatActivity {
                 tableUser.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        //If user exists in database
+                        //Check if already user phone
                         if (dataSnapshot.child(edtPhone.getText().toString()).exists()) {
                             mDialog.dismiss();
-                            Toast.makeText(SignUp.this, "Number already registered", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(SignUp.this, "User already exists", Toast.LENGTH_SHORT).show();
                         } else {
                             mDialog.dismiss();
+                            Log.d("","Gaand faad");
                             User user = new User(edtName.getText().toString(), edtPassword.getText().toString());
                             tableUser.child(edtPhone.getText().toString()).setValue(user);
                             Toast.makeText(SignUp.this, "Sign Up successful", Toast.LENGTH_SHORT).show();
-                            finish();
+                            Intent home = new Intent(SignUp.this, Home.class);
+                            startActivity(home);
+//                            finish();
                         }
                     }
 

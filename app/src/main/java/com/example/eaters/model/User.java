@@ -4,6 +4,10 @@ public class User {
     private String Name;
     private String Password;
 
+    public User(){
+
+    }
+
     public User(String name, String password) {
         Name = name;
         Password = password;
