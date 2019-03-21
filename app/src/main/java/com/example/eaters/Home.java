@@ -1,6 +1,7 @@
 package com.example.eaters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -139,11 +140,11 @@ public class Home extends AppCompatActivity
 
                         //get Category Id and Send to new Activity
 
-//                        Intent foodlist = new Intent(Home.this, FoodList.class);
-//
-//                        foodlist.putExtra("CategoryId",adapter.getRef(position).getKey());
-//
-//                        startActivity(foodlist);
+                        Intent foodlist = new Intent(Home.this, FoodList.class);
+
+                        foodlist.putExtra("CategoryId",adapter.getRef(position).getKey());
+
+                        startActivity(foodlist);
 
                     }
 
@@ -175,9 +176,6 @@ public class Home extends AppCompatActivity
         super.onStop();
 
         adapter.stopListening();
-
-
-
     }
 
     @Override
